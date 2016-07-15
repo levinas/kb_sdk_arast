@@ -127,6 +127,12 @@
 			"display": "miniasm",
 			"id": "miniasm",
 			"ui_name": "miniasm"
+		    },
+		    {
+			"value": "ray",
+			"display": "ray",
+			"id": "ray",
+			"ui_name": "ray"
 		    }
 		]
 	    }

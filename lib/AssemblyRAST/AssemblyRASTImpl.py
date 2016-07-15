@@ -137,6 +137,9 @@ This sample module contains multiple assembly methods:
         objects = ws.get_objects([{'ref': params['workspace_name']+'/'+params['read_library_name']}])
 
         libs = [objects[0]]
+        print('objects=', objects)
+        print('libs=', libs)
+
         wsid = objects[0]['info'][6]
 
         kbase_assembly_input = self.combine_read_libs(libs)
@@ -371,4 +374,12 @@ This sample module contains multiple assembly methods:
         #BEGIN run_a6
         output = self.arast_run(ctx, params, "a6")
         #END run_a6
+        return [output]
+
+    def run_arast(self, ctx, params):
+        # ctx is the context object
+        # return variables are: output
+        #BEGIN run_arast
+        output = self.arast_run(ctx, params, "kiki")
+        #END run_arast
         return [output]
