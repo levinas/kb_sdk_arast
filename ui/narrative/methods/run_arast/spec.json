@@ -1,8 +1,8 @@
 {
     "ver": "1.0.0",
     "authors": [
-        "fangfang",
-	"cbun"
+	"cbun",
+        "fangfang"
     ],
     "contact": "help@kbase.us",
     "visible": true,
