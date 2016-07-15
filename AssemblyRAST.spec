@@ -20,11 +20,11 @@ module AssemblyRAST {
     */
     typedef structure {
         string workspace_name;
-        string read_library_name;
+        list<string> read_library_names;
         string output_contigset_name;
 
         int min_contig_len;
-        list <string> extra_params;
+        list<string> extra_params;
     } AssemblyParams;
 
     typedef structure {
@@ -80,7 +80,7 @@ module AssemblyRAST {
     */
     typedef structure {
         string workspace_name;
-        string read_library_name;
+        list<string> read_library_names;
         string output_contigset_name;
         string recipe;
         string assembler;

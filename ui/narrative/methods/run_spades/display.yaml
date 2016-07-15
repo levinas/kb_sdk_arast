@@ -27,7 +27,7 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters :
-    read_library_name :
+    read_library_names :
         ui-name : Read Library
         short-hint : Read library
     output_contigset_name:

@@ -27,7 +27,7 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters :
-    read_library_name :
+    read_library_names :
         ui-name : Read Library
         short-hint : Long read library (PacBio or Oxford Nanopore single end reads uploaded in FASTA/FASTQ)
     output_contigset_name:

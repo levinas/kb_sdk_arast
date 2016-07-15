@@ -27,9 +27,9 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters :
-    read_library_name :
+    read_library_names :
         ui-name : Read Library
-        short-hint : Read library
+        short-hint : List of read libraries
     output_contigset_name:
         ui-name : Output ContigSet name
         short-hint : Enter a name for the assembled contigs data object

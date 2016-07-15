@@ -112,7 +112,7 @@ This sample module contains multiple assembly methods:
         return assembly_input
 
     # template
-    def arast_run(self, ctx, params, assembler='kiki'):
+    def arast_run(self, ctx, params, assembler='kiki', server='140.221.67.209'): # testing on torino
         output = None
 
         console = []
@@ -122,8 +122,12 @@ This sample module contains multiple assembly methods:
         #### do some basic checks
         if 'workspace_name' not in params:
             raise ValueError('workspace_name parameter is required')
-        if 'read_library_name' not in params:
-            raise ValueError('read_library_name parameter is required')
+        if 'read_library_names' not in params:
+            raise ValueError('read_library_names parameter is required')
+        if type(params['read_library_names']) != list:
+            raise ValueError('read_library_names must be a list')
+        if not params['read_library_names']:
+            raise ValueError('At least one read library must be provided')
         if 'output_contigset_name' not in params:
             raise ValueError('output_contigset_name parameter is required')
         min_contig_len = params.get('min_contig_len') or 300
@@ -131,23 +135,32 @@ This sample module contains multiple assembly methods:
         token = ctx['token']
 
         os.environ["KB_AUTH_TOKEN"] = token
-        os.environ["ARAST_URL"] = '140.221.67.209' # testing on torino
+        os.environ["ARAST_URL"] =  server # testing on torino: '140.221.67.209'
 
         ws = workspaceService(self.workspaceURL, token=token)
-        objects = ws.get_objects([{'ref': params['workspace_name']+'/'+params['read_library_name']}])
+        ws_libs = []
+        for lib_name in params['read_library_names']:
+            ws_libs.append({'ref': params['workspace_name']+'/'+lib_name})
+        libs = ws.get_objects(ws_libs)
 
-        libs = [objects[0]]
-        print('objects=', objects)
-        print('libs=', libs)
-
-        wsid = objects[0]['info'][6]
+        wsid = libs[0]['info'][6]
 
         kbase_assembly_input = self.combine_read_libs(libs)
         tmp_data = self.create_temp_json(kbase_assembly_input)
 
-        logger.info('Start {} assembler'.format(assembler))
+        mode = ''
+        cmd = ['ar-run', '--data-json', tmp_data]
+        if assembler:
+            cmd = cmd + ['-a', assembler]
+            mode = 'assembler: ' + assembler
+        elif 'pipeline' in params:
+            cmd = cmd + ['-p', params['pipeline']]
+            mode = 'assembly pipeline: ' + params['pipeline']
+        else:
+            cmd = cmd + ['-r', params.get('recipe', 'auto')]
+            mode = 'assembly recipe: ' + params['recipe']
 
-        cmd = ['ar-run', '-a', assembler, '--data-json', tmp_data]
+        logger.info('Start {}'.format(mode))
         logger.debug('CMD: {}'.format(' '.join(cmd)))
 
         p = subprocess.Popen(cmd,
@@ -217,7 +230,7 @@ This sample module contains multiple assembly methods:
         if 'provenance' in ctx:
             provenance = ctx['provenance']
         # add additional info to provenance here, in this case the input data object reference
-        provenance[0]['input_ws_objects']=[params['workspace_name']+'/'+params['read_library_name']]
+        provenance[0]['input_ws_objects']=[params['workspace_name']+'/'+x for x in params['read_library_names']]
 
         # save the contigset output
         new_obj_info = ws.save_objects({
@@ -380,6 +393,8 @@ This sample module contains multiple assembly methods:
         # ctx is the context object
         # return variables are: output
         #BEGIN run_arast
-        output = self.arast_run(ctx, params, "kiki")
+        output = self.arast_run(ctx, params, params.get('assembler', ""))
+        # output = self.arast_run(ctx, params, params.get('assembler', ""),
+        #                         server='https://kbase.us/services/assembly')
         #END run_arast
         return [output]
