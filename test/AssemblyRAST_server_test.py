@@ -292,7 +292,7 @@ class AssemblyRASTTest(unittest.TestCase):
             'read_library_names': [pe_lib_info[1]],
             'output_contigset_name': 'output.contigset',
             'min_contig_length': 350,
-            'recipe': 'auto'
+            'recipe': 'kiki'
             # 'pipeline': 'ray'
             # 'assembler': ''
         }
