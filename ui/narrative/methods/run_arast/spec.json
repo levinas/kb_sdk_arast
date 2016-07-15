@@ -1,0 +1,213 @@
+{
+    "ver": "1.0.0",
+    "authors": [
+        "fangfang",
+	"cbun"
+    ],
+    "contact": "help@kbase.us",
+    "visible": true,
+    "categories": ["active","assembly"],
+    "widgets": {
+        "input": null,
+	"output": "kbaseReportView"
+    },
+    "parameters": [
+        {
+	    "id": "read_library_name",
+	    "optional": false,
+	    "advanced": false,
+	    "allow_multiple": true,
+	    "default_values": [ "" ],
+	    "field_type": "text",
+	    "text_options": {
+		"valid_ws_types": ["KBaseAssembly.SingleEndLibrary","KBaseFile.SingleEndLibrary","KBaseAssembly.PairedEndLibrary","KBaseFile.PairedEndLibrary"]
+	    }
+        },
+	{
+	    "id" : "output_contigset_name",
+	    "optional" : false,
+	    "advanced" : false,
+	    "allow_multiple" : false,
+	    "default_values" : [ "contigs" ],
+	    "field_type" : "text",
+	    "text_options" : {
+		"valid_ws_types" : [ "KBaseGenomes.ContigSet" ],
+		"is_output_name":true
+	    }
+	},
+	{
+	    "id" : "recipe",
+	    "optional" : true,
+	    "advanced" : false,
+	    "allow_multiple" : false,
+	    "default_values" : [ "auto" ],
+	    "field_type" : "dropdown",
+	    "dropdown_options":{
+		"options": [
+		    {
+			"value": "auto",
+			"display": "Automatic Assembly",
+			"id": "auto",
+			"ui_name": "Automatic Assembly"
+		    },
+		    {
+			"value": "fast",
+			"display": "Fast Pipeline",
+			"id": "fast",
+			"ui_name": "Fast Pipeline"
+		    },
+		    {
+			"value": "smart",
+			"display": "Smart Pipeline",
+			"id": "smart",
+			"ui_name": "Smart Pipeline"
+		    },
+		    {
+			"value": "kiki",
+			"display": "Kiki Assembler",
+			"id": "kiki",
+			"ui_name": "Kiki Assembler"
+		    },
+		    {
+			"value": "full_spades",
+			"display": "SPAdes Pipeline",
+			"id": "full_spades",
+			"ui_name": "SPAdes Pipeline"
+		    }
+		]
+	    }
+	},
+	{
+	    "id" : "assembler",
+	    "optional" : true,
+	    "advanced" : true,
+	    "allow_multiple" : false,
+	    "default_values" : [ "" ],
+	    "field_type" : "dropdown",
+	    "dropdown_options":{
+		"options": [
+		    {
+			"value": "velvet",
+			"display": "velvet",
+			"id": "velvet",
+			"ui_name": "velvet"
+		    },
+		    {
+			"value": "kiki",
+			"display": "kiki",
+			"id": "kiki",
+			"ui_name": "kiki"
+		    },
+		    {
+			"value": "spades",
+			"display": "spades",
+			"id": "spades",
+			"ui_name": "spades"
+		    },
+		    {
+			"value": "a6",
+			"display": "a6",
+			"id": "a6",
+			"ui_name": "a6"
+		    },
+		    {
+			"value": "idba",
+			"display": "idba",
+			"id": "idba",
+			"ui_name": "idba"
+		    },
+		    {
+			"value": "megahit",
+			"display": "megahit",
+			"id": "megahit",
+			"ui_name": "megahit"
+		    },
+		    {
+			"value": "miniasm",
+			"display": "miniasm",
+			"id": "miniasm",
+			"ui_name": "miniasm"
+		    }
+		]
+	    }
+	},
+	{
+	    "id" : "pipeline",
+	    "optional" : true,
+	    "advanced" : true,
+	    "allow_multiple" : false,
+	    "default_values" : [ "" ],
+	    "field_type" : "text",
+	    "text_options" : {
+	    }
+	},
+	{
+	    "id" : "min_contig_len",
+	    "optional" : true,
+	    "advanced" : true,
+	    "allow_multiple" : false,
+	    "default_values" : [ "" ],
+	    "field_type" : "text",
+	    "text_options" : {
+		"validate_as": "int",
+      		"min_int" : 1
+	    }
+	}
+    ],
+    "behavior": {
+        "service-mapping": {
+            "url": "",
+            "name": "AssemblyRAST",
+            "method": "run_arast",
+            "input_mapping": [
+                {
+                    "narrative_system_variable": "workspace",
+		    "target_property": "workspace_name"
+                },
+                {
+		    "input_parameter": "read_library_name",
+          	    "target_property": "read_library_name"
+                },
+		{
+		    "input_parameter": "output_contigset_name",
+          	    "target_property": "output_contigset_name"
+		},
+		{
+		    "input_parameter": "recipe",
+		    "target_property": "recipe"
+		},
+		{
+		    "input_parameter": "assembler",
+		    "target_property": "assembler"
+		},
+		{
+		    "input_parameter": "pipeline",
+		    "target_property": "pipeline"
+		},
+		{
+		    "input_parameter": "min_contig_len",
+          	    "target_property": "min_contig_len"
+		}
+            ],
+            "output_mapping": [
+                {
+                    "narrative_system_variable": "workspace",
+                    "target_property": "workspace_name"
+                },
+                {
+                    "service_method_output_path": [0, "report_name"],
+                    "target_property": "report_name"
+                },
+                {
+                    "service_method_output_path": [0, "report_ref"],
+                    "target_property": "report_ref"
+                },
+		{
+		    "constant_value": "16",
+		    "target_property": "report_window_line_height"
+		}
+            ]
+        }
+    },
+    "job_id_output_field": "docker"
+}

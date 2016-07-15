@@ -6,7 +6,7 @@ This modules run assemblers supported in the AssemblyRAST service.
 module AssemblyRAST {
 
     /*
-        Run assemblers supported by AssemblyRAST.
+        Run individual assemblers supported by AssemblyRAST.
 
         workspace_name - the name of the workspace for input/output
         read_library_name - the name of the PE read library (SE library support in the future)
@@ -19,7 +19,7 @@ module AssemblyRAST {
         @optional extra_params
     */
     typedef structure {
-        string workspace;
+        string workspace_name;
         string read_library_name;
         string output_contigset_name;
 
@@ -60,6 +60,35 @@ module AssemblyRAST {
         authentication required;
 
     funcdef run_a6(AssemblyParams params) returns (AssemblyOutput output)
+        authentication required;
+
+
+    /*
+        Call AssemblyRAST.
+
+        workspace_name - the name of the workspace for input/output
+        read_library_name - the name of the PE read library (SE library support in the future)
+        output_contig_set_name - the name of the output contigset
+
+        extra_params - assembler specific parameters
+        min_contig_length - minimum length of contigs to output, default 200
+
+        @optional recipe
+        @optional assembler
+        @optional pipeline
+        @optional min_contig_len
+    */
+    typedef structure {
+        string workspace_name;
+        string read_library_name;
+        string output_contigset_name;
+        string recipe;
+        string assembler;
+        string pipeline;
+        int min_contig_len;
+    } ArastParams;
+
+    funcdef run_arast(ArastParams params) returns (AssemblyOutput output)
         authentication required;
 
 };
