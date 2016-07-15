@@ -87,6 +87,12 @@
 	    "dropdown_options":{
 		"options": [
 		    {
+			"value": "",
+			"display": "none",
+			"id": "none",
+			"ui_name": "none"
+		    },
+		    {
 			"value": "velvet",
 			"display": "velvet",
 			"id": "velvet",
