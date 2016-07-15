@@ -21,7 +21,7 @@ from Bio import SeqIO
 from biokbase.workspace.client import Workspace as workspaceService
 
 
-logging.basicConfig(format="[%(asctime)s %(levelname)s %(name)s] %(message)s", level=logging.DEBUG)
+# logging.basicConfig(format="[%(asctime)s %(levelname)s %(name)s] %(message)s", level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 #END_HEADER
@@ -155,7 +155,7 @@ This sample module contains multiple assembly methods:
         if assembler:
             cmd = cmd + ['-a', assembler]
             mode = 'assembler: ' + assembler
-        elif 'pipeline' in params:
+        elif 'pipeline' in params and params['pipeline']:
             cmd = cmd + ['-p', params['pipeline']]
             mode = 'assembly pipeline: ' + params['pipeline']
         else:
