@@ -151,6 +151,9 @@ This sample module contains multiple assembly methods:
         kbase_assembly_input = self.combine_read_libs(libs)
         tmp_data = self.create_temp_json(kbase_assembly_input)
 
+        logger.info('pipeline = {}'.format(params['pipeline']))
+        logger.info('type = {}'.format(type(params['pipeline'])))
+
         mode = ''
         cmd = ['ar-run', '--data-json', tmp_data]
         if assembler:
