@@ -119,7 +119,7 @@ This sample module contains multiple assembly methods:
         output = None
 
         console = []
-        self.log(console,'Running run_{} with params='.format(assembler))
+        self.log(console,'Running arast_run() with params=')
         self.log(console, pformat(params))
 
         #### do some basic checks
@@ -156,7 +156,7 @@ This sample module contains multiple assembly methods:
         if assembler:
             cmd = cmd + ['-a', assembler]
             mode = 'assembler: ' + assembler
-        elif 'pipeline' in params and params['pipeline']:
+        elif 'pipeline' in params and params['pipeline'] and params['pipeline'] is not None:
             logger.info('params["pipeline"] = {}'.params['pipeline'])
             cmd = cmd + ['-p', params['pipeline']]
             mode = 'assembly pipeline: ' + params['pipeline']

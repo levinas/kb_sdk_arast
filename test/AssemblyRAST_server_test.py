@@ -293,9 +293,11 @@ class AssemblyRASTTest(unittest.TestCase):
             'read_library_names': [pe_lib_info[1]],
             'output_contigset_name': 'output.contigset',
             'min_contig_length': 350,
-            'recipe': 'kiki'
-            # 'pipeline': 'ray'
-            # 'assembler': ''
+            'recipe': 'kiki',
+            # 'pipeline': 'ray',
+            # 'assembler': '',
+            'assembler': None,
+            'pipeline' : None
         }
 
         result = self.getImpl().run_arast(self.getContext(),params)
