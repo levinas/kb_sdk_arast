@@ -157,6 +157,7 @@ This sample module contains multiple assembly methods:
             cmd = cmd + ['-a', assembler]
             mode = 'assembler: ' + assembler
         elif 'pipeline' in params and params['pipeline']:
+            logger.info('params["pipeline"] = {}'.params['pipeline'])
             cmd = cmd + ['-p', params['pipeline']]
             mode = 'assembly pipeline: ' + params['pipeline']
         else:
