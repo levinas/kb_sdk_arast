@@ -114,7 +114,8 @@ This sample module contains multiple assembly methods:
         return assembly_input
 
     # template
-    def arast_run(self, ctx, params, assembler, server='140.221.67.209'): # testing on torino
+    # def arast_run(self, ctx, params, assembler, server='140.221.67.209'): # testing on torino
+    def arast_run(self, ctx, params, assembler, server='https://kbase.us/services/assembly'):
         output = None
 
         console = []
@@ -170,7 +171,7 @@ This sample module contains multiple assembly methods:
                              stderr=subprocess.STDOUT, shell=False)
 
         out, err = p.communicate()
-        logger.debug(out)
+        logger.debug('ARAST command line output: {}'.format(out))
 
         if p.returncode != 0:
             raise ValueError('Error running ar_run, return code: {}\n'.format(p.returncode))

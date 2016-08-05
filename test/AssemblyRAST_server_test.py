@@ -273,6 +273,7 @@ class AssemblyRASTTest(unittest.TestCase):
         # figure out where the test data lives
         pe_lib_info = self.getPairedEndLibInfo()
         pprint(pe_lib_info)
+        # return
 
         # Object Info Contents
         # 0 - obj_id objid
