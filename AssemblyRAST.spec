@@ -9,7 +9,7 @@ module AssemblyRAST {
         Run individual assemblers supported by AssemblyRAST.
 
         workspace_name - the name of the workspace for input/output
-        read_library_name - the name of the PE read library (SE library support in the future)
+        read_library_names - list of read library names
         output_contig_set_name - the name of the output contigset
 
         extra_params - assembler specific parameters
